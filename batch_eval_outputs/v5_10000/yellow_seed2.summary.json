@@ -1,0 +1,20 @@
+{
+  "target_color": "yellow",
+  "instruction": "grasp the yellow cylinder",
+  "seed": 2,
+  "num_steps": 90,
+  "target_x": 0.0628451481461525,
+  "target_y": 0.16827243566513062,
+  "first_close_step": 24,
+  "final_xy_error": 0.011231134414242403,
+  "xy_error_at_close": 0.008921044911707993,
+  "target_z_initial": 0.009977083653211594,
+  "target_z_final": 0.010015428997576237,
+  "object_lift_delta": 3.83453443646431e-05,
+  "strict_lift_success": false,
+  "stop_reason": "max_steps",
+  "total_xy_move": 0.08941699382565298,
+  "post_close_lift_delta": 3.83453443646431e-05,
+  "retry_sum": 0,
+  "post_close_positive_z_steps": 46
+}

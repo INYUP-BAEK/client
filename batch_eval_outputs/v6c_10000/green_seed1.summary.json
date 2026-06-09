@@ -1,0 +1,20 @@
+{
+  "target_color": "green",
+  "instruction": "grasp the green cylinder",
+  "seed": 1,
+  "num_steps": 90,
+  "target_x": 0.009918737225234509,
+  "target_y": 0.16248032450675964,
+  "first_close_step": 33,
+  "final_xy_error": 0.01223755931221134,
+  "xy_error_at_close": 0.01711720983792992,
+  "target_z_initial": 0.009977083653211594,
+  "target_z_final": 0.009633881971240044,
+  "object_lift_delta": -0.00034320168197155,
+  "strict_lift_success": false,
+  "stop_reason": "max_steps",
+  "total_xy_move": 0.08686411066850083,
+  "post_close_lift_delta": -0.00034320168197155,
+  "retry_sum": 0,
+  "post_close_positive_z_steps": 18
+}

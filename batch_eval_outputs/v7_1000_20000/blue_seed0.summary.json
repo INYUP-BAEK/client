@@ -1,0 +1,20 @@
+{
+  "target_color": "blue",
+  "instruction": "grasp the blue cylinder",
+  "seed": 0,
+  "num_steps": 90,
+  "target_x": 0.00872499868273735,
+  "target_y": 0.24415652453899384,
+  "first_close_step": null,
+  "final_xy_error": 0.048452134912267734,
+  "xy_error_at_close": null,
+  "target_z_initial": 0.009977083653211594,
+  "target_z_final": 0.009977083653211594,
+  "object_lift_delta": 0.0,
+  "strict_lift_success": false,
+  "stop_reason": "max_steps",
+  "total_xy_move": 0.09247608380616107,
+  "post_close_lift_delta": null,
+  "retry_sum": 0,
+  "post_close_positive_z_steps": 0
+}
