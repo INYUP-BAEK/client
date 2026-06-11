@@ -62,7 +62,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--colors", nargs="+", default=["red", "blue", "green", "yellow"])
     parser.add_argument("--seeds", nargs="+", type=int, default=[0, 1, 2])
     parser.add_argument("--max_steps", type=int, default=200)
-    parser.add_argument("--max_delta_xyz", type=float, default=0.005)
+    parser.add_argument("--max_delta_xyz", type=float, default=0.12)
     parser.add_argument("--output_dir", default="batch_eval_outputs")
     parser.add_argument("--use_action_smoothing", action="store_true")
     parser.add_argument("--smooth_alpha", type=float, default=0.6)

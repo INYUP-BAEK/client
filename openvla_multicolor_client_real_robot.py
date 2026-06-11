@@ -15,7 +15,11 @@ import mujoco
 import numpy as np
 import requests
 from PIL import Image
-from sshtunnel import SSHTunnelForwarder
+
+try:
+    from sshtunnel import SSHTunnelForwarder
+except ImportError:
+    SSHTunnelForwarder = None
 
 from raccoon_env import SyncSimRaccoonEnv
 
@@ -37,7 +41,7 @@ CYLINDER_COLORS = tuple(CYLINDER_BODY_BY_COLOR.keys())
 # 이전 단일 object range였던 x=(-0.18, 0.18), y=(0.10, 0.18)보다
 # x는 좁게, y는 조금 더 앞으로 제한한다.
 DEFAULT_OBJECT_X_RANGE = (-0.10, 0.10)
-DEFAULT_OBJECT_Y_RANGE = (0.16, 0.25)
+DEFAULT_OBJECT_Y_RANGE = (0.16, 0.195)
 DEFAULT_MIN_OBJECT_DISTANCE = 0.035
 DEFAULT_YAW_RANGE = (-math.pi / 4, math.pi / 4)
 DEFAULT_INSTRUCTION_TEMPLATE = "grasp the {color} cylinder"
@@ -80,7 +84,13 @@ def resolve_ssh_password(args: argparse.Namespace) -> Optional[str]:
     return None
 
 
-def open_ssh_tunnel(args: argparse.Namespace) -> SSHTunnelForwarder:
+def open_ssh_tunnel(args: argparse.Namespace):
+    if SSHTunnelForwarder is None:
+        raise ImportError(
+            "sshtunnel is required only when --use_ssh_tunnel is enabled. "
+            "Install requirements.txt or open the SSH tunnel manually and pass "
+            "--server_url http://127.0.0.1:8000."
+        )
     ssh_password = resolve_ssh_password(args)
     tunnel = SSHTunnelForwarder(
         ssh_address_or_host=(args.ssh_host, args.ssh_port),
@@ -93,7 +103,7 @@ def open_ssh_tunnel(args: argparse.Namespace) -> SSHTunnelForwarder:
     return tunnel
 
 
-def build_server_url(args: argparse.Namespace, tunnel: Optional[SSHTunnelForwarder]) -> str:
+def build_server_url(args: argparse.Namespace, tunnel: Optional[object]) -> str:
     if tunnel is not None:
         return f"http://{args.local_server_host}:{tunnel.local_bind_port}"
     if not args.server_url:
@@ -775,7 +785,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--settle_seconds_per_action", type=float, default=0.8)
     parser.add_argument("--initial_settle_seconds", type=float, default=0.3)
     parser.add_argument("--delta_scale", type=float, default=1.0)
-    parser.add_argument("--max_delta_xyz", type=float, default=0.005)
+    parser.add_argument("--max_delta_xyz", type=float, default=0.12)
     parser.add_argument("--request_timeout", type=float, default=60.0)
     parser.add_argument("--use_viewer", action="store_true")
     parser.add_argument("--camera_name", type=str, default="front_view")
@@ -810,14 +820,14 @@ def parse_args() -> argparse.Namespace:
 
     parser.add_argument("--use_ssh_tunnel", action="store_true", help="Connect to the inference server through SSH local port forwarding")
     parser.add_argument("--ssh_host", type=str, default="qlak315.iptime.org")
-    parser.add_argument("--ssh_port", type=int, default=24100)
+    parser.add_argument("--ssh_port", type=int, default=23000)
     parser.add_argument("--ssh_user", type=str, default="root")
     parser.add_argument("--ssh_password", type=str, default=None, help="Prefer OPENVLA_SSH_PASSWORD or --ssh_ask_password")
     parser.add_argument("--ssh_ask_password", action="store_true", help="Prompt for the SSH password interactively")
     parser.add_argument("--remote_server_host", type=str, default="127.0.0.1")
     parser.add_argument("--remote_server_port", type=int, default=8000)
     parser.add_argument("--local_server_host", type=str, default="127.0.0.1")
-    parser.add_argument("--local_server_port", type=int, default=0)
+    parser.add_argument("--local_server_port", type=int, default=8000)
     return parser.parse_args()
 
 

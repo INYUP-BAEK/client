@@ -20,7 +20,7 @@ class WorkspaceBounds:
     x_max: float = 0.16
     y_min: float = 0.11
     y_max: float = 0.18
-    z_min: float = 0.02
+    z_min: float = 0.016
     z_max: float = 0.10
 
     def clip_xyz(self, x: float, y: float, z: float) -> Tuple[float, float, float]:
@@ -366,7 +366,7 @@ class SyncSimRaccoonEnv:
 
         safe_x_min, safe_x_max = -0.18, 0.18
         safe_y_min, safe_y_max = 0.05, 0.20
-        safe_z_min, safe_z_max = 0.02, 0.11
+        safe_z_min, safe_z_max = self.workspace.z_min, self.workspace.z_max
 
         cur_dx, cur_dy, cur_dz = dx, dy, dz
         tried_results = []
